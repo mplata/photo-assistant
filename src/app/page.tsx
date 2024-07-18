@@ -1,10 +1,25 @@
 "use client"
+import { useState } from "react";
+
 import PhotoUpload from "@/components/UploadPhoto";
+import { getFolderIdFromUrl } from "@/util";
 
 export default function Home() {
 
-  const onProcessUrl = (url: string) => {
-    alert(url);
+  const { photos, setPhotos } = useState<any[]>([]);
+
+  const onProcessUrl = async (url: string) => {
+    const folderId = getFolderIdFromUrl(url);
+    try {
+      const response = await fetch(`/api/photos?folderId=${folderId}`);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Error fetching photos:', error);
+    }
   }
 
   return (
