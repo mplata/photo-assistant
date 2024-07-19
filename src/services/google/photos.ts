@@ -1,14 +1,16 @@
+import { envVars } from '@/environment';
 import { google } from 'googleapis';
 
 const getPhotosFromFolder = async (folderId: string) =>  {
-  
-  const drive = google.drive({ version: 'v3', auth: 'AIzaSyBhOE8tAOw0HfrHDetKUoGIiPNlPMrNKgA'});
+  const { driveApiKey } = envVars.google;
+  console.log(process.env.GOOGLE_DRIVE_API_KEY);
+  const drive = google.drive({ version: 'v3', auth: driveApiKey});
 
   try {
     const res = await drive.files.list({
       q: `'${folderId}' in parents and mimeType contains 'image/'`,
       fields: 'files(id, name, webViewLink, webContentLink)',
-      key:  'AIzaSyBhOE8tAOw0HfrHDetKUoGIiPNlPMrNKgA',
+      key:  driveApiKey,
     });
 
     const files = res.data.files;

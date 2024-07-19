@@ -3,10 +3,12 @@ import { useState } from "react";
 
 import PhotoUpload from "@/components/UploadPhoto";
 import { getFolderIdFromUrl } from "@/util";
+import { GoogleDrivePhoto } from "./types";
+import PhotosContainer from "@/components/PhotosContainer";
 
 export default function Home() {
 
-  const { photos, setPhotos } = useState<any[]>([]);
+  const [ photos, setPhotos ] = useState<GoogleDrivePhoto[]>([]);
 
   const onProcessUrl = async (url: string) => {
     const folderId = getFolderIdFromUrl(url);
@@ -15,8 +17,8 @@ export default function Home() {
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
-      const data = await response.json();
-      console.log(data);
+      const data = await response.json() as GoogleDrivePhoto[];
+      setPhotos(data);
     } catch (error) {
       console.error('Error fetching photos:', error);
     }
@@ -26,6 +28,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
         <PhotoUpload onProcessUrl={onProcessUrl}/>
+        <PhotosContainer photos={photos} />
       </div>
     </main>
   );
