@@ -10,7 +10,6 @@ export async function GET(req: NextRequest, res: NextResponse): Promise<NextResp
     const photos = await getPhotosFromFolder(folderId);
     return NextResponse.json(photos, { status: 200 });
   } catch (error: any) {
-    console.log(error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
