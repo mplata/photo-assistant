@@ -3,7 +3,7 @@ import { google } from 'googleapis';
 
 const getPhotosFromFolder = async (folderId: string) =>  {
   const { driveApiKey } = envVars.google;
-  console.log(process.env.GOOGLE_DRIVE_API_KEY);
+  
   const drive = google.drive({ version: 'v3', auth: driveApiKey});
 
   try {

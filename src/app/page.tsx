@@ -5,12 +5,15 @@ import PhotoUpload from "@/components/UploadPhoto";
 import { getFolderIdFromUrl } from "@/util";
 import { GoogleDrivePhoto } from "./types";
 import PhotosContainer from "@/components/PhotosContainer";
+import Loader from '@/components/Loading';
 
 export default function Home() {
 
   const [ photos, setPhotos ] = useState<GoogleDrivePhoto[]>([]);
+  const [ isLoading, setLoading ] = useState<boolean>(false);
 
   const onProcessUrl = async (url: string) => {
+    setLoading(true);
     const folderId = getFolderIdFromUrl(url);
     try {
       const response = await fetch(`/api/photos?folderId=${folderId}`);
@@ -21,14 +24,20 @@ export default function Home() {
       setPhotos(data);
     } catch (error) {
       console.error('Error fetching photos:', error);
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <PhotoUpload onProcessUrl={onProcessUrl}/>
-        <PhotosContainer photos={photos} />
+        <PhotoUpload isLoading={isLoading} onProcessUrl={onProcessUrl}/>
+        {
+          isLoading ?
+            <Loader /> :
+            <PhotosContainer photos={photos} />
+        }
       </div>
     </main>
   );

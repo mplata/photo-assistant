@@ -5,18 +5,18 @@ import ConfirmButton from '../ConfirmButton';
 const URL_REGEX = /^https:\/\/drive\.google\.com\/drive\/folders\/[a-zA-Z0-9_-]+$/;
 
 interface PhotoUploadProps {
-    onProcessUrl: (url: string) => void;
+  onProcessUrl: (url: string) => void;
+  isLoading: boolean;
 }
 
-const PhotoUpload = ({ onProcessUrl }: PhotoUploadProps) => {
+const PhotoUpload = ({ onProcessUrl, isLoading }: PhotoUploadProps) => {
 
     const [ url, setUrl ] = useState('');
 
     const handleUpload = () => {
-        console.log('Upload');
         onProcessUrl(url);
     }
-
+    
     const isValidUrl = useMemo(() => {
         return URL_REGEX.test(url);
     }, [url]);
@@ -28,15 +28,16 @@ const PhotoUpload = ({ onProcessUrl }: PhotoUploadProps) => {
                 <input
                     type='text'
                     className='p-2 rounded border-2 border-black'
+                    disabled={isLoading}
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                 />
-                <p className="font-normal text-sm text-gray-400 md:px-6">Link should be a valid and public google drive folder</p>
+                <p className="font-normal text-sm text-gray-400 md:px-6">Link must be a valid and public google drive folder</p>
             </label>
         </section>
         <ConfirmButton
             text='Process'
-            disabled={!isValidUrl}
+            disabled={!isValidUrl || isLoading}
             onClick={handleUpload}
         />
     </>
