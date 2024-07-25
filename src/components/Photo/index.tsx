@@ -12,7 +12,7 @@ const Photo = ({ photo }: PhotoProps) => {
   }
 
   
-  return  <div className='w-1/4'>
+  return  <div className='rounded-md border-1 border-stone-800 cursor-pointer shadow-[0rem_0rem_0rem_0.125rem_#222]'>
       <img
         key={photo.id}
         src={`https://lh3.google.com/u/0/d/${photo.id}`}
