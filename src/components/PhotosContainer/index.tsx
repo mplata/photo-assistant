@@ -12,7 +12,7 @@ const PhotosContainer = ({ photos }: PhotosContainerProps) => {
     return null;
   }
   
-  return  <div className='flex flex-row flex-wrap gap-1'>
+  return  <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
       {
         photos.map(photo => <Photo key={photo.id} photo={photo}/>
         )

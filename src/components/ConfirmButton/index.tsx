@@ -14,7 +14,7 @@ const ConfirmButton = ({ text, disabled, onClick }: ConfirmButtonProps) => {
             className='bg-[#FDC671] text-[#222E49] py-2 px-8
                 align-middle text-sm font-semibold rounded-full
                 shadow-[0rem_0rem_0rem_0.125rem_#222]
-                disabled:bg-slate-50 opacity-80'
+                disabled:bg-slate-50 opacity-80 mt-2'
             >
             {text}
         </button>
