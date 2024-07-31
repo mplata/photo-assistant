@@ -31,7 +31,6 @@ const evalPhoto = async (photoId: string): Promise<PhotoEvaluation> => {
     ],
     system: PROMPTS.SYSTEM,
   });
-  console.log(result);
   return result.object;
 };
 
