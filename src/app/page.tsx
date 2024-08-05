@@ -35,7 +35,7 @@ export default function Home() {
         <PhotoUpload isLoading={isLoading} onProcessUrl={onProcessUrl}/>
         {
           isLoading ?
-            <Loader /> :
+            <Loader  loadingType="photo"/> :
             <PhotosContainer photos={photos} />
         }
       </div>

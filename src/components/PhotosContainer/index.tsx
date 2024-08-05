@@ -4,6 +4,7 @@ import Photo from '../Photo';
 import { AlbumEvaluation } from '@/services/openai/schemas';
 import AlbumReview from '../AlbumReview';
 import ShowReviewButton from '../ShowReviewButton';
+import Loader from '../Loading';
 
 interface PhotosContainerProps {
   photos: GoogleDrivePhoto[];
@@ -64,6 +65,9 @@ const PhotosContainer = ({ photos }: PhotosContainerProps) => {
       }
       { 
         (!showReview && evaluation) && <ShowReviewButton onClick={() => setShowReview(true)}/>
+      }
+      {
+        evalStatus === 'EVALUATING' && <Loader  loadingType="ai"/>
       }
   </div>
 };
