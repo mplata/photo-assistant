@@ -15,7 +15,7 @@ const createPhotoEvaluationPromise = async (images: Sharp.Sharp[]): Promise <Alb
       image: buffer,
     };
   }));
-
+  
   const res = await generateObject<AlbumEvaluation>({
     model: openai('gpt-4o-mini'),
     schema: AlbumEvaluationSchema,
@@ -23,7 +23,7 @@ const createPhotoEvaluationPromise = async (images: Sharp.Sharp[]): Promise <Alb
       {
         role: 'user',
         content: [
-          { type: 'text', text: PROMPTS.EVAL_PHOTOS },
+          { type: 'text', text: PROMPTS.EVAL_PHOTOS(imgObjects.length) },
           ...imgObjects,
         ],
       },
