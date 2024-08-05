@@ -1,9 +1,7 @@
 import { evalPhoto } from '@/services/openai/eval_photos';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const config = {
-  maxDuration: 60,
-};
+export const maxDuration = 60;
 
 export async function POST(req: NextRequest, res: NextResponse): Promise<NextResponse> {
   try {
