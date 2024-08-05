@@ -14,7 +14,7 @@ const AlbumReview = ({ evaluation, onCloseDetail }: AlbumReviewProps) => {
   return (
     <div className="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-192 px-8 py-4 bg-violet-300 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] grid place-content-center">
       <div>
-          <h1 className="text-2xl mb-4">¡Tu album ha sido revisado!, con base en tus fotos, te recomendamos estos 5 titulos para tu album:</h1>
+          <h1 className="text-2xl mb-4">¡Tu album ha sido revisado!, con base en tus fotos, tenemos algunos comentarios y te recomendamos 5 titulos para tu album:</h1>
           <p className='text-left my-2'>
             {
               evaluation.review
