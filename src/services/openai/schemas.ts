@@ -7,4 +7,13 @@ export const PhotoEvaluationSchema = z.object({
   review: z.string(),
 });
 
+export const AlbumEvaluationSchema = z.object({
+  title: z.array(z.string()).length(5),
+  review: z.string(),
+  photos: z.array(
+    PhotoEvaluationSchema,
+  ),
+});
+
 export type PhotoEvaluation = z.infer<typeof PhotoEvaluationSchema>;
+export type AlbumEvaluation = z.infer<typeof AlbumEvaluationSchema>;

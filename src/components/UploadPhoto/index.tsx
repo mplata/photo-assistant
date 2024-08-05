@@ -22,7 +22,7 @@ const PhotoUpload = ({ onProcessUrl, isLoading }: PhotoUploadProps) => {
     }, [url]);
 
     return  <>
-        <section id="image-preview" className="max-w-sm p-6 mb-4 bg-gray-100 items-center mx-auto text-center rounded-lg shadow-[0rem_0rem_0rem_0.125rem_#222]">
+        <section id="image-preview" className="max-w-sm p-6 mb-16 bg-violet-400 items-center mx-auto text-center border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
             <label>
                 <input
                     type='text'
@@ -31,7 +31,9 @@ const PhotoUpload = ({ onProcessUrl, isLoading }: PhotoUploadProps) => {
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                 />
-                <p className="font-normal text-sm text-gray-400 md:px-6 mt-2">Link must be a valid and public google drive folder</p>
+                <p className="font-bold text-md text-black md:px-6 mt-2">
+                    El enlace debe ser una carpeta publica de Google Drive
+                </p>
             </label>
             <ConfirmButton
               text='Go for it!'
