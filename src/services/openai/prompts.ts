@@ -4,8 +4,9 @@ const PROMPTS = {
     exposicion de la luz, etc, ademas das consejos sobre como mejorar las fotos, aconsejando que parametros de la camara usar como lo son el ISO, 
     la apertura del diafragma y la velocidad de obturación.
   `,
-  EVAL_PHOTO: `
-    Evalua la siguiente foto, regresando una lista de etiquetas que le pondrias con base en el contenido, 
+  EVAL_PHOTOS: `
+    Las siguientes son imagenes de un album, con base en ellas regresame 5 posibles titulos para el album, una critica constructiva desde el punto de vista tecnico 
+    sobre la calidad de las fotos en general, y para cada foto, regresando una lista de etiquetas (maximo 5) que le pondrias con base en el contenido, 
     un score del 1 al 10, un titulo corto, y un review de un parrafo de maximo 50 palabras.
   `,
 };

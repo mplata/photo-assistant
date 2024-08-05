@@ -1,37 +1,57 @@
-import { generateObject } from 'ai';
+import { generateObject, ImagePart } from 'ai';
 import { openai } from "@ai-sdk/openai"
 import PROMPTS from './prompts';
-import { PhotoEvaluation, PhotoEvaluationSchema } from './schemas';
+import { AlbumEvaluation, AlbumEvaluationSchema } from './schemas';
 import Sharp from 'sharp';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
-const evalPhoto = async (photoId: string): Promise<PhotoEvaluation> => {
-  
-  const response = await axios({
-    url: `https://drive.usercontent.google.com/uc?id=${photoId}&export=download`,
-    responseType: 'arraybuffer'
-  });
-  const sharpData = Sharp(response.data);
-  sharpData.resize({ width: 400 });
-  
-  const result = await generateObject<PhotoEvaluation>({
+type PhotoResponse = AxiosResponse<ArrayBuffer>;
+
+const createPhotoEvaluationPromise = async (images: Sharp.Sharp[]): Promise <AlbumEvaluation> => {
+  const imgObjects:ImagePart[] = await Promise.all(images.map(async (img) => {
+    const buffer = await img.toBuffer();
+    return {
+      type: 'image',
+      image: buffer,
+    };
+  }));
+
+  const res = await generateObject<AlbumEvaluation>({
     model: openai('gpt-4o-mini'),
-    schema: PhotoEvaluationSchema,
+    schema: AlbumEvaluationSchema,
     messages: [
       {
         role: 'user',
         content: [
-          { type: 'text', text: PROMPTS.EVAL_PHOTO },
-          {
-            type: 'image',
-            image: await sharpData.toBuffer(),
-          },
+          { type: 'text', text: PROMPTS.EVAL_PHOTOS },
+          ...imgObjects,
         ],
       },
     ],
     system: PROMPTS.SYSTEM,
   });
-  return result.object;
+  return res.object;
+};
+
+const evalPhoto = async (photoIds: string[]): Promise<AlbumEvaluation> => {
+  
+  const photosPromises: Promise<PhotoResponse>[] = photoIds.map((photoId: string): Promise<PhotoResponse> => (
+    axios({
+      url: `https://drive.usercontent.google.com/uc?id=${photoId}&export=download`,
+      responseType: 'arraybuffer'
+    })
+  ));
+
+  const photosResponses = await Promise.all(photosPromises);
+
+  const sharpResponses: Sharp.Sharp[] = photosResponses.map((photoResponse): Sharp.Sharp => {
+    const sharpData = Sharp(photoResponse.data);
+    sharpData.resize({ width: 350 });
+    return sharpData;
+  });
+  
+  const albumEvaluation: Promise<AlbumEvaluation> = createPhotoEvaluationPromise(sharpResponses);
+  return albumEvaluation;
 };
 
 export {
