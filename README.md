@@ -21,4 +21,5 @@ Abrir [http://localhost:3000](http://localhost:3000) con tu navegador para ver r
 Se necesitan las siguientes variables de entorno (.env.local)
 
 GOOGLE_DRIVE_API_KEY=<GOOGLE_DRIVE_API_KEY>
+
 OPENAI_API_KEY=<OPENAI_API_KEY>
