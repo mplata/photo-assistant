@@ -34,6 +34,7 @@ const PhotosContainer = ({ photos }: PhotosContainerProps) => {
       }
       const data = await response.json() as AlbumEvaluation;
       setEvaluation(data);
+      setShowReview(true);
     } catch (error) {
       console.error('Error fetching photos:', error);
     } finally {

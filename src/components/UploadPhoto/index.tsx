@@ -36,7 +36,7 @@ const PhotoUpload = ({ onProcessUrl, isLoading }: PhotoUploadProps) => {
                 </p>
             </label>
             <ConfirmButton
-              text='Go for it!'
+              text='¡Adelante!'
               disabled={!isValidUrl || isLoading}
               onClick={handleUpload}
             />
